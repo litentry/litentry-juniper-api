@@ -1,0 +1,8 @@
+[package]
+name = "litentry-juniper-database"
+version = "0.1.0"
+authors = ["juniuszhou <junius.zhou@gmail.com>"]
+
+[dependencies]
+diesel = { version = "1.4.0", features = ["mysql"] }
+
