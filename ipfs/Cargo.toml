@@ -1,0 +1,8 @@
+[package]
+name = "litentry-juniper-ipfs"
+version = "0.1.0"
+authors = ["juniuszhou <junius.zhou@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ipfsapi = "0.2"

@@ -9,7 +9,6 @@ extern crate juniper_codegen;
 mod model;
 mod schema;
 use model::*;
-use schema::*;
 
 use futures::future;
 use hyper::rt::{self, Future};

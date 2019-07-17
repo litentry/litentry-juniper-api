@@ -19,5 +19,9 @@ tokio-threadpool = "0.1.7"
 log = "0.4"
 env_logger = "0.5"
 pretty_env_logger = "0.3.0"
+websocket = "0.22.4"
+ipfsapi = "0.2"
 
 litentry-juniper-database = {path = "db"}
+litentry-juniper-ipfs = {path = "ipfs"}
+litentry-juniper-ws = {path = "ws"}

@@ -1,0 +1,10 @@
+[package]
+name = "litentry-juniper-ws"
+version = "0.1.0"
+authors = ["juniuszhou <junius.zhou@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+websocket = "0.22.4"
+futures = "0.1.17"
+tokio = "0.1.7"
