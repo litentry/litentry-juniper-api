@@ -25,3 +25,4 @@ ipfsapi = "0.2"
 litentry-juniper-database = {path = "db"}
 litentry-juniper-ipfs = {path = "ipfs"}
 litentry-juniper-ws = {path = "ws"}
+substrate-access-test = {path = "substrate/tests"}

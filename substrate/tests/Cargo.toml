@@ -1,0 +1,22 @@
+[package]
+name = "substrate-access-test"
+version = "0.1.0"
+authors = ["zhoujun <junius.zhou@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+jsonrpc-core-client = { version = "12.0.0", features = ["http", "ws"] }
+log = "0.4"
+futures = "0.1.28"
+hyper = "0.12.33"
+
+node-runtime = {git = "https://github.com/paritytech/substrate"}
+substrate-rpc = {git = "https://github.com/paritytech/substrate"}
+node-primitives = {git = "https://github.com/paritytech/substrate"}
+sr-primitives = {git = "https://github.com/paritytech/substrate"}
+srml-indices = {git = "https://github.com/paritytech/substrate"}
+substrate-transaction-pool = {git = "https://github.com/paritytech/substrate"}
+substrate-test-runtime = {git = "https://github.com/paritytech/substrate"}
+substrate-keyring = {git = "https://github.com/paritytech/substrate"}
