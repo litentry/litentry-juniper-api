@@ -18,6 +18,7 @@ use hyper::{Body, Response, Server, StatusCode};
 use juniper::*;
 use juniper_codegen::*;
 use std::sync::Arc;
+use litentry_juniper_database;
 
 fn main() {
     pretty_env_logger::init();
