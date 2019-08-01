@@ -7,6 +7,7 @@ extern crate hyper;
 extern crate sr_primitives;
 extern crate node_runtime;
 
+
 use futures::Future;
 use hyper::rt;
 use jsonrpc_core_client::{
@@ -26,6 +27,27 @@ use substrate_rpc::{system::SystemClient,
 };
 use node_primitives::{Hash};
 use node_runtime::{Address, Block, Header, SignedBlock};
+
+use substrate_transaction_pool::txpool::ExtrinsicFor;
+use node_runtime::{Address, Block, Header, SignedBlock};
+use substrate_test_runtime::{Transfer, AccountKeyring, Keyring, Extrinsic};
+
+pub fn get_tx() {
+    let who = AccountKeyring::Alice;
+    let nonce = 0;
+    let account = AccountKeyring::from(AccountKeyring::Alice);
+    let transfer = Transfer {
+        from: who.into(),
+        to: AccountKeyring::Bob.into(),
+        nonce,
+        amount: 1,
+    };
+    let signed_transfer = transfer.into_signed_tx();
+
+    let xt = signed_transfer.encode();
+    xt
+}
+
 pub fn test_author() {
 
     rt::run(rt::lazy(|| {
@@ -42,10 +64,10 @@ pub fn test_author() {
 }
 
 fn get_author_api(client: &AuthorClient<Hash, Hash>) -> impl Future<Item=(), Error=RpcError> {
-    client.submit_extrinsic(vec![1, 2, 3].into())
+    // vec![1, 2, 3].into()
+    client.submit_extrinsic(get_tx().into())
         .map(|result| {
             println!("{:?}", result);
         })
 }
-
 

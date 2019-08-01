@@ -6,6 +6,7 @@ extern crate node_primitives;
 extern crate hyper;
 extern crate sr_primitives;
 extern crate node_runtime;
+extern crate hex;
 
 use futures::Future;
 use hyper::rt;
@@ -26,6 +27,8 @@ use substrate_rpc::{system::SystemClient,
 };
 use node_primitives::{Hash};
 use node_runtime::{Address, Block, Header, SignedBlock};
+use hex;
+
 fn test_state() {
 
     rt::run(rt::lazy(|| {
@@ -46,6 +49,11 @@ fn get_state_api(client: &StateClient<Hash>) -> impl Future<Item=(), Error=RpcEr
     client.runtime_version(Some([0; 32].into()))
         .map(|runtime_version| {
             println!("{:?}", runtime_version);
+        });
+    // b":code" b"templateModule something"
+    client.storage(hex::encode(":code"))
+        .map(|data| {
+            println!(":?", data)
         })
 }
 
