@@ -1,12 +1,25 @@
+[[bin]]
+name = "litentry-juniper-api"
+path = "src/main.rs"
+
 [package]
 name = "litentry-juniper-api"
 version = "0.1.0"
 authors = ["juniuszhou <junius.zhou@gmail.com>"]
 edition = "2018"
 
+[workspace]
+members = [
+"db",
+"hyper",
+"warp",
+"substrate/tests",
+]
+
 [dependencies]
+warp = "0.1"
+serde_json = "1"
 serde = "1.0"
-serde_json = "1.0"
 serde_derive = "1.0"
 url = "1.7"
 juniper = "0.12.0"
@@ -22,9 +35,4 @@ pretty_env_logger = "0.3.0"
 websocket = "0.22.4"
 ipfsapi = "0.2"
 
-litentry-juniper-database = {path = "db"}
-litentry-juniper-ipfs = {path = "ipfs"}
-litentry-juniper-ws = {path = "ws"}
-litentry-hyper = {path = "hyper"}
-substrate-access-test = {path = "substrate/tests"}
-litentry-warp = {path = "warp"}
+litentry-juniper-database = {path  = "db"}

@@ -1,0 +1,5 @@
+[package]
+name = "substrate-access"
+version = "0.1.0"
+authors = ["zhoujun <junius.zhou@gmail.com>"]
+edition = "2018"

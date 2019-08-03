@@ -6,8 +6,15 @@ extern crate juniper_hyper;
 extern crate pretty_env_logger;
 extern crate juniper_codegen;
 
+#[macro_use]
+extern crate serde_derive;
+extern crate serde;
+extern crate serde_json;
+
 mod model;
 mod schema;
+mod db;
+use db::Database;
 use model::*;
 
 use futures::future;
@@ -19,6 +26,13 @@ use juniper::*;
 use juniper_codegen::*;
 use std::sync::Arc;
 use litentry_juniper_database;
+
+//#[derive(Clone)]
+//pub struct Context {
+//    pub db: Arc<Database>,
+//}
+
+impl juniper::Context for Database {}
 
 fn main() {
     pretty_env_logger::init();
@@ -36,11 +50,17 @@ fn main() {
             let ctx = ctx.clone();
             match (req.method(), req.uri().path()) {
                 (&Method::GET, "/") => Box::new(juniper_hyper::graphiql("/graphql")),
-                (&Method::GET, "/graphql") => Box::new(juniper_hyper::graphql(root_node, ctx, req)),
+                (&Method::GET, "/graphql") => {
+                    println!("Method::GET");
+                    Box::new(juniper_hyper::graphql(root_node, ctx, req))
+                },
                 (&Method::POST, "/graphql") => {
+                    println!("Method::POST");
+                    println!("{:?}", &req);
                     Box::new(juniper_hyper::graphql(root_node, ctx, req))
                 }
                 _ => {
+                    println!("Method No match.");
                     let mut response = Response::new(Body::empty());
                     *response.status_mut() = StatusCode::NOT_FOUND;
                     Box::new(future::ok(response))
