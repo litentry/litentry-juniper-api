@@ -45,8 +45,8 @@ impl Database {
 //        .execute(&self.establish_connection())
 //    }
 
-    pub fn get_users(&self, user_id: &str) -> std::vec::Vec<models::Users> {
-        users.filter(id.eq(user_id)).limit(3).load::<Users>(&self.establish_connection()).expect("Error load Users.")
+    pub fn get_users(&self, user_id: i32) -> std::vec::Vec<models::Users> {
+        users.filter(id.eq(user_id)).limit(1).load::<Users>(&self.establish_connection()).expect("Error load Users.")
     }
 }
 

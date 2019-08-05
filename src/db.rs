@@ -9,7 +9,7 @@ pub struct Database {
 
 impl Database {
     pub fn new() -> Database {
-        let uri = "mysql://root:12345678@127.0.0.1:3306/mysql";
+        let uri = "mysql://root:12345678@192.168.1.224:3306/mysql";
         let mysql = MysqlDatabase::new(&uri);
         Database {
             mysql,
@@ -26,9 +26,11 @@ impl Database {
 
     pub fn user(&self, id: i32) -> Option<UsersData> {
         println!("db users");
-        Some(UsersData{id, name: String::from("hello")})
-//        self.mysql.get_users(id).first().map(|u| UsersData{
-//            id: u.id, name: u.name
-//        })
+        let data = &self.mysql.get_users(id);
+        if data.is_empty() {
+            None
+        } else {
+            Some(UsersData{id, name: String::from(&data[0].name)})
+        }
     }
 }
