@@ -1,0 +1,18 @@
+[package]
+name = "litentry-tests"
+version = "0.1.0"
+authors = ["juniuszhou <junius.zhou@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures-util = "0.2.1"
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0.98"
+hyper = "0.12.33"
+ureq = { version = "0.11.0", features = ["json"]}
+sr-io = {git = "https://github.com/paritytech/substrate"}
+hex = "0.3.2"
+

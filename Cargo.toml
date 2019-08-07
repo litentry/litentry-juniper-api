@@ -14,6 +14,8 @@ members = [
 "hyper",
 "warp",
 "substrate/tests",
+"substrate/rpc",
+"tests",
 ]
 
 [dependencies]
@@ -36,3 +38,5 @@ websocket = "0.22.4"
 ipfsapi = "0.2"
 
 litentry-juniper-database = {path  = "db"}
+litentry-hyper = {path = "hyper"}
+litentry-substrate-rpc = {path = "substrate/rpc"}

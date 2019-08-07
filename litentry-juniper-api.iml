@@ -23,10 +23,20 @@
       <sourceFolder url="file://$MODULE_DIR$/substrate/tests/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/substrate/tests/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/substrate/tests/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/substrate/rpc/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/substrate/rpc/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/substrate/rpc/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/substrate/rpc/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/db/target" />
       <excludeFolder url="file://$MODULE_DIR$/hyper/target" />
+      <excludeFolder url="file://$MODULE_DIR$/substrate/rpc/target" />
       <excludeFolder url="file://$MODULE_DIR$/substrate/tests/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/tests/target" />
       <excludeFolder url="file://$MODULE_DIR$/warp/target" />
     </content>
     <orderEntry type="inheritedJdk" />
