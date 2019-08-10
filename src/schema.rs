@@ -10,6 +10,9 @@ pub struct Query;
 graphql_object!(UsersData: Context |&self| {
     field id() -> i32 { self.id }
     field name() -> String { self.name.clone() }
+    field address() -> String { self.address.clone() }
+    field balance() -> String { self.balance.clone() }
+
 });
 
 graphql_object!(Query: Context |&self| {

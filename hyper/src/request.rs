@@ -1,15 +1,13 @@
 use hyper::client::{Client, IntoUrl};
 use hyper::header::{Headers, Accept, UserAgent};
-use hyper::net::HttpsConnector;
 use hyper::Url;
 
 use super::Response;
 use super::Result;
 
-const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));
+// const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));
 
-
-fn get_hyper_client(url: &Url) -> Client {
+fn get_hyper_client(_url: &Url) -> Client {
         Client::new()
 }
 

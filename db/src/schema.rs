@@ -3,6 +3,6 @@ table! {
         id -> Integer,
         name -> Text,
         address -> Text,
-        balance -> Integer,
+        balance -> Text,
     }
 }

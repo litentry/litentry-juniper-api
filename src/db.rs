@@ -11,7 +11,7 @@ pub struct Database {
 
 impl Database {
     pub fn new() -> Database {
-        let uri = "mysql://root:12345678@192.168.1.224:3306/mysql";
+        let uri = "mysql://root:12345678@192.168.2.158:3306/litentry";
         let mysql = MysqlDatabase::new(&uri);
         Database {
             mysql,
@@ -22,13 +22,27 @@ impl Database {
         println!("db users");
 
         let data = &self.mysql.get_users(id);
-
-        let new_balance = rpc::get()
-
         if data.is_empty() {
-            None
-        } else {
-            Some(UsersData{id, name: String::from(&data[0].name)})
+            println!("not found.");
+            return None;
+        }
+
+        let new_balance = rpc::get_balance(&data[0].address);
+        println!("query balance in chain.");
+
+        match new_balance {
+            Some(balance) => Some(UsersData {
+                id,
+                name: String::from(&data[0].name),
+                address: String::from(&data[0].address),
+                balance: String::from(balance.to_string()),
+            }),
+            None => Some(UsersData {
+                id,
+                name: String::from(&data[0].name),
+                address: String::from(&data[0].address),
+                balance: String::from(&data[0].balance),
+            }),
         }
     }
 }

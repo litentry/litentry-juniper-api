@@ -8,6 +8,7 @@ extern crate ureq;
 extern crate sr_io;
 extern crate hex;
 extern crate substrate_primitives;
+//use ureq::body::Payload;
 
 use serde::{Serialize, Deserialize};
 use std::str;
@@ -57,22 +58,29 @@ fn main() {
     // address from Alice
     let address = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
     let public_key = get_public_from_address(address);
+    println!("public key is {:?}", public_key.clone().unwrap().0);
     let method = "Balances FreeBalance".as_bytes();
     let mut input = [0u8; 52];
     let mut index = 0;
     for letter in method {
         input[index] = *letter;
+        print!("{} ", input[index]);
         index = index + 1;
     };
+    println!("");
     for letter in &public_key.unwrap().0 {
         input[index] = *letter;
+        print!("{} ", input[index]);
         index = index + 1;
     };
+    println!("");
+
 
     let result = blake2_256(&input);
+    println!("result is {:?}", &result);
     let mut hex_str = String::from("0x");
     hex_str.push_str(&hex::encode(&result));
-
+    println!("{:?}", &hex_str);
     let resp = ureq::post("http://192.168.2.158:9933/")
         .set("Content-Type", "application/json")
         .send_json(json!({

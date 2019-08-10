@@ -15,6 +15,7 @@ members = [
 "warp",
 "substrate/tests",
 "substrate/rpc",
+"substrate/utils",
 "tests",
 ]
 
@@ -40,3 +41,8 @@ ipfsapi = "0.2"
 litentry-juniper-database = {path  = "db"}
 litentry-hyper = {path = "hyper"}
 litentry-substrate-rpc = {path = "substrate/rpc"}
+litentry-substrate-utils = {path = "substrate/utils"}
+
+
+
+

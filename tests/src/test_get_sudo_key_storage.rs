@@ -23,7 +23,7 @@ use std::str;
 use std::os;
 use hyper::{Client, Request};
 use hyper::Body;
-use sr_io::{twox_128};
+use sr_io::{twox_128, blake2_256};
 
 #[derive(Serialize, Deserialize)]
 struct PostResult {

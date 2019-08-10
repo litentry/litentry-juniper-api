@@ -14,5 +14,6 @@ serde_derive = "1.0.98"
 hyper = "0.12.33"
 ureq = { version = "0.11.0", features = ["json"]}
 sr-io = {git = "https://github.com/paritytech/substrate"}
+substrate-primitives = {git = "https://github.com/paritytech/substrate"}
 hex = "0.3.2"
 

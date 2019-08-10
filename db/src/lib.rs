@@ -3,13 +3,9 @@ extern crate diesel;
 
 pub mod models;
 pub mod schema;
-
 use diesel::prelude::*;
-use std::env;
-use schema::users;
 use models::*;
 use schema::users::dsl::*;
-use diesel::insert_into;
 
 pub struct Database {
      url: String,
