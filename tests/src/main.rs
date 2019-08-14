@@ -57,17 +57,19 @@ fn main() {
     // address from Alice
     let address = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
     let public_key = get_public_from_address(address);
-    let method = "Balances FreeBalance".as_bytes();
-    let mut input = [0u8; 52];
+    let method = "LitentryStorage IdentitiesArray".as_bytes();
+    let mut input = [0u8; 64];
     let mut index = 0;
     for letter in method {
         input[index] = *letter;
         index = index + 1;
     };
-    for letter in &public_key.unwrap().0 {
-        input[index] = *letter;
-        index = index + 1;
-    };
+
+    input[index] = 0u8;
+    index = index + 1;
+    input[index] = 0u8;
+    index = index + 1;
+
 
     let result = blake2_256(&input);
     let mut hex_str = String::from("0x");
@@ -83,11 +85,11 @@ fn main() {
     }));
 
     if resp.ok() {
-        let result: PostResult = serde_json::from_str(&resp.into_string().unwrap()).unwrap();
-        let balance = decode_balance(&result.result);
+        // let result: PostResult = serde_json::from_str(&resp.into_string().unwrap()).unwrap();
+        //let balance = decode_balance(&result.result);
 
-
-        println!("{}", balance);
+        let result = &resp.into_string().unwrap();
+        println!("{}", result);
     } else {
         println!("");
     }

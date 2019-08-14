@@ -12,7 +12,7 @@ extern crate hex;
 
 use serde::{Serialize, Deserialize};
 use litentry_substrate_utils::{get_public_from_address, decode_balance};
-use substrate_primitives::blake2_256;
+use substrate_primitives::{blake2_256, twox_128};
 
 #[derive(Serialize, Deserialize)]
 struct PostResult {
@@ -33,7 +33,10 @@ pub fn get_balance(address: &str) -> Option<i128> {
         input[index] = *letter;
         index = index + 1;
     };
-    //TODO if address is invalid. should return None.
+    if &public_key.is_err() {
+        return None;
+    }
+
     for letter in &public_key.unwrap().0 {
         input[index] = *letter;
         index = index + 1;
