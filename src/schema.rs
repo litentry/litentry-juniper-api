@@ -36,16 +36,10 @@ graphql_object!(Query: Context |&self| {
     let context = executor.context();
     context.user(id)
   }
-});
-
-graphql_object!(Query: Context |&self| {
   field identity(&executor, id: i32) -> Option<Identities> {
     let context = executor.context();
     context.identity(id)
   }
-});
-
-graphql_object!(Query: Context |&self| {
   field token(&executor, id: i32) -> Option<Tokens> {
     let context = executor.context();
     context.token(id)
