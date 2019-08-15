@@ -66,7 +66,7 @@ pub fn get_balance(address: &str) -> Option<i128> {
 }
 
 pub fn get_identity_count() -> Option<u64> {
-    let method = "LitentryModule IdentitiesCount".as_bytes();
+    let method = "LitentryStorage IdentitiesCount".as_bytes();
     let result = twox_128(&method);
     let mut hex_str = String::from("0x");
     hex_str.push_str(&hex::encode(&result));
@@ -91,7 +91,7 @@ pub fn get_identity_count() -> Option<u64> {
 }
 
 pub fn get_token_count() -> Option<u64> {
-    let method = "LitentryModule AuthorizedTokensCount".as_bytes();
+    let method = "LitentryStorage AuthorizedTokensCount".as_bytes();
     let result = twox_128(&method);
     let mut hex_str = String::from("0x");
     hex_str.push_str(&hex::encode(&result));
@@ -115,7 +115,35 @@ pub fn get_token_count() -> Option<u64> {
     }
 }
 
-pub fn get_identity_via_index() -> Option<i128> {None}
+pub fn get_identity_via_index(identity_index: u64) -> Option<i128> {
+    let mut input_vec: Vec<u8> = Vec::new();
+    let mut method = "LitentryStorage IdentitiesArray".as_bytes().to_vec();
+    input_vec.append(&mut method);
+    input_vec.append(&mut identity_index.to_be_bytes().to_vec());
+
+    let result = twox_128(&input_vec[..]);
+    let mut hex_str = String::from("0x");
+    hex_str.push_str(&hex::encode(&result));
+    let resp = ureq::post(URI)
+        .set("Content-Type", "application/json")
+        .send_json(json!({
+            "jsonrpc": "2.0".to_owned(),
+            "method": "state_getStorage".to_owned(),
+            "params": (hex_str, ),
+            "id": 1,
+    }));
+
+    if resp.ok() {
+        let result_string = &resp.into_string().unwrap();
+        println!("get_token_count result is {}", result_string.to_owned());
+        let result: PostResult = serde_json::from_str(&result_string).unwrap();
+        let count = decode_u64(&result.result);
+        Some(count)
+    } else {
+        None
+    }
+    None
+}
 pub fn get_token_via_index() -> Option<i128> {None}
 
 //pub fn get<A>(method_name: &str, params_tuple: A) -> Result<String, String> {

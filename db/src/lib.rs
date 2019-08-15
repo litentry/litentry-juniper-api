@@ -29,7 +29,7 @@ impl Database {
 
 
 //    pub fn insert_users(&self, new_id: i32, new_deposit: i32, new_round: i32) -> QueryResult<usize> {
-//        insert_into(users).values(
+//        diesel::insert_into(users).values(
 //            (id.eq(new_id), deposit.eq(new_deposit), round.eq(new_round)))
 //            .execute(&self.establish_connection())
 //    }
