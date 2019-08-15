@@ -144,7 +144,16 @@ pub fn get_identity_via_index(identity_index: u64) -> Option<i128> {
     }
     None
 }
+
+pub fn get_identity_owner_via_hash(identity_hash: String) -> Option<String> {
+    None
+}
+
 pub fn get_token_via_index() -> Option<i128> {None}
+
+pub fn get_token_owner_via_hash(identity_hash: String) -> Option<String> {
+    None
+}
 
 //pub fn get<A>(method_name: &str, params_tuple: A) -> Result<String, String> {
 //    let resp = ureq::post(URI)

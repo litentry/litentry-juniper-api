@@ -3,6 +3,7 @@ pub struct Users {
     pub id: i32,
     pub name: String,
     pub address: String,
+    pub public_key: String,
     pub balance: String,
 }
 

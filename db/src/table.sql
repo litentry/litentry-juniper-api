@@ -8,7 +8,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+# id keep the same order with index in identities array
 CREATE TABLE `identities` (
   `id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
@@ -16,6 +16,7 @@ CREATE TABLE `identities` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+# id keep the same order with index in tokens array
 CREATE TABLE `tokens` (
   `id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,

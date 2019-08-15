@@ -1,11 +1,14 @@
 # litentry-juniper-api
 
-# compile error https://github.com/rust-lang/rust/issues/58840
-  fix it via upgrade rust version to 1.36.0
+Api sever is designed as bridge between substrate blockchain and app/device. 
+The server framework is juniper based on hyper.
 
-# warp is better and higher level framework combine the hyper and graphql.
-https://github.com/seanmonstar/warp/tree/master/examples
+Hyper is a fast, safe HTTP implementation written in and for Rust.
+Hyper implement all request/response via "async IO" (non-blocking sockets) via 
+the Tokio and Futures crates. Juniper is GraphQL query implementation in Rust, 
+provide most efficient and most flexible query service.
 
-http://alex.amiran.it/post/2018-08-16-rust-graphql-webserver-with-warp-juniper-and-mongodb.html
+For the interface to substrate part, most of code from substrate code base. 
+Functionalists include get metadata, query storage, send transaction and subscription.
 
-#
+
