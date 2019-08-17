@@ -1,5 +1,4 @@
 extern crate juniper;
-use juniper::FieldResult;
 use crate::model;
 use model::{UsersData, Identities, Tokens};
 use crate::db::Database as Context;

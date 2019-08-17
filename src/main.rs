@@ -15,7 +15,6 @@ mod model;
 mod schema;
 mod db;
 use db::Database;
-use model::*;
 
 use futures::future;
 use hyper::rt::{self, Future};
@@ -23,14 +22,7 @@ use hyper::service::service_fn;
 use hyper::Method;
 use hyper::{Body, Response, Server, StatusCode};
 use juniper::*;
-use juniper_codegen::*;
 use std::sync::Arc;
-use litentry_juniper_database;
-
-//#[derive(Clone)]
-//pub struct Context {
-//    pub db: Arc<Database>,
-//}
 
 impl juniper::Context for Database {}
 
@@ -45,7 +37,7 @@ fn main() {
     let new_service = move || {
         let root_node = root_node.clone();
         let ctx = db.clone();
-        service_fn(move |req| -> Box<Future<Item = _, Error = _> + Send> {
+        service_fn(move |req| -> Box<dyn Future<Item = _, Error = _> + Send> {
             let root_node = root_node.clone();
             let ctx = ctx.clone();
             match (req.method(), req.uri().path()) {

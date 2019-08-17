@@ -30,7 +30,7 @@ table! {
 }
 
 table! {
-    litentryIndex (id) {
+    litentry_index (id) {
         id -> Integer,
         identity_index -> Integer,
         token_index -> Integer,

@@ -9,8 +9,8 @@ impl Database {
         users.filter(id.eq(query_id)).limit(1).load::<models::Users>(&self.establish_connection()).expect("Error load Users.")
     }
 
-    pub fn get_users_via_public_key(&self, public_key: String) -> std::vec::Vec<models::Users> {
-        users.filter(id.eq(query_id)).limit(1).load::<models::Users>(&self.establish_connection()).expect("Error load Users.")
+    pub fn get_users_via_public_key(&self, query_key: &str) -> std::vec::Vec<models::Users> {
+        users.filter(public_key.like(query_key)).limit(1).load::<models::Users>(&self.establish_connection()).expect("Error load Users.")
     }
 }
 

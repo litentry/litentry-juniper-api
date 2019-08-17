@@ -1,4 +1,5 @@
-
+# 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+# 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -30,7 +31,7 @@ CREATE TABLE `tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # id always 0, default value for index is -1.
-CREATE TABLE `litentryIndex` (
+CREATE TABLE `litentry_index` (
   `id` int(11) NOT NULL DEFAULT 0,
   `identity_index` int(11) NOT NULL DEFAULT -1,
   `token_index` int(11) NOT NULL DEFAULT -1,

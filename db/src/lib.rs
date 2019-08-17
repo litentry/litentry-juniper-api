@@ -9,7 +9,6 @@ pub mod tokens_table;
 pub mod litentry_table;
 
 use diesel::prelude::*;
-use models::*;
 
 pub struct Database {
      url: String,

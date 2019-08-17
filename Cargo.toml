@@ -16,6 +16,7 @@ members = [
 "substrate/tests",
 "substrate/rpc",
 "substrate/utils",
+"substrate/client",
 "tests",
 ]
 
@@ -42,7 +43,7 @@ litentry-juniper-database = {path  = "db"}
 litentry-hyper = {path = "hyper"}
 litentry-substrate-rpc = {path = "substrate/rpc"}
 litentry-substrate-utils = {path = "substrate/utils"}
-
+litentry-substrate-client = {path = "substrate/client"}
 
 
 

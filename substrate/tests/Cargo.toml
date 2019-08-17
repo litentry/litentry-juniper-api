@@ -20,3 +20,4 @@ srml-indices = {git = "https://github.com/paritytech/substrate"}
 substrate-transaction-pool = {git = "https://github.com/paritytech/substrate"}
 substrate-test-runtime = {git = "https://github.com/paritytech/substrate"}
 substrate-keyring = {git = "https://github.com/paritytech/substrate"}
+# substrate-subxt = {git = "https://github.com/paritytech/substrate-subxt", version = "0.1.0"}
