@@ -7,14 +7,24 @@
   }
 }
 
+{
+  identity (id: 1) {
+    id
+    identityHash
+    ownerId
+  }
+}
 
 {
-  token (id: 1) {
+  token (id: 0) {
     id
     ownerId
     identityId
+    tokenHash
+    cost
     data
     dataType
     expired
   }
 }
+

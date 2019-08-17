@@ -102,7 +102,14 @@ impl Database {
                                 Ok(_) => {
                                     // update last index in map.
                                     println!("update index map for identity in memory.");
-                                    self.index_map.lock().unwrap().borrow_mut().insert("identities".to_owned(), index);
+                                    &self.index_map.lock().unwrap().borrow_mut().insert("identities".to_owned(), index);
+                                    match &self.mysql.update_identity_index(index) {
+                                        Ok(_) => {println!("update identity index in mysql successfully.")},
+                                        Err(info) => {
+                                            println!("failed update identity index in mysql with {:?}", info);
+                                            break;
+                                        }
+                                    }
                                 },
                                 Err(info) => {
                                     println!("sql error info is {:?}.", info);
@@ -160,18 +167,30 @@ impl Database {
                                 let owner_id = &self.mysql.get_users_via_public_key(&public_key);
                                 let token_identity = rpc::get_token_identity_via_hash(&token.0);
                                 if token_identity.is_some() {
-                                    let identity_id = &self.mysql.get_identities_via_hash(&public_key);
+                                    let identity = token_identity.unwrap();
+                                    let identity_id = &self.mysql.get_identities_via_hash(&identity);
                                     println!("insert new token. index {} owner_id {} identity_id {} token hash {} balance {}",
                                              index, owner_id[0].id, identity_id[0].id, &token.0, &token.1);
 
                                     let insert_result = &self.mysql.insert_tokens(index, owner_id[0].id, identity_id[0].id,
                                                                                   &token.0, &token.1, &token.2, &token.3, &token.4);
-                                    if insert_result.is_err() {
-                                        break;
-                                    } else {
-                                        println!("update index map for token in memory.");
-                                        // update last index in map.
-                                        self.index_map.lock().unwrap().borrow_mut().insert("tokens".to_owned(), index);
+                                    match insert_result {
+                                        Ok(_) => {
+                                            // update last index in map.
+                                            println!("update index map for tokens in memory.");
+                                            &self.index_map.lock().unwrap().borrow_mut().insert("tokens".to_owned(), index);
+                                            match &self.mysql.update_token_index(index) {
+                                                Ok(_) => {println!("update token index in mysql successfully")},
+                                                Err(info) => {
+                                                    println!("failed update token index in mysql with {:?}", info);
+                                                    break;
+                                                }
+                                            }
+                                        },
+                                        Err(info) => {
+                                            println!("sql error info is {:?}.", info);
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
