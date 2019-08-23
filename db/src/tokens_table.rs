@@ -2,6 +2,7 @@
 use diesel::prelude::*;
 use models;
 use schema::tokens::dsl::*;
+use schema;
 use Database;
 
 impl Database {
@@ -16,5 +17,14 @@ impl Database {
              token_hash.eq(new_hash), cost.eq(new_cost), data.eq(new_data), data_type.eq(new_data_type),
             expired.eq(new_expired)))
             .execute(&self.establish_connection())
+    }
+
+    pub fn get_tokens_via_owner_id(&self, query_id: i32) -> std::vec::Vec<models::Tokens> {
+        tokens.filter(owner_id.eq(query_id)).load::<models::Tokens>(&self.establish_connection()).expect("Error load Users.")
+    }
+
+    pub fn get_tokens_owners(&self, query_id: i32) -> std::vec::Vec<(models::Tokens, models::Identities)> {
+        tokens.inner_join(schema::identities::dsl::identities.on(identity_id.eq(schema::identities::dsl::id)))
+            .load::<(models::Tokens, models::Identities)>(&self.establish_connection()).expect("Error load Users.")
     }
 }

@@ -1,7 +1,9 @@
 extern crate juniper;
+
 use crate::model;
-use model::{UsersData, Identities, Tokens};
+use model::{UsersData, Identities, Tokens, SystemInfo};
 use crate::db::Database as Context;
+use std::vec::Vec;
 
 pub struct Query;
 
@@ -30,6 +32,11 @@ graphql_object!(Tokens: Context |&self| {
     field expired() -> String { self.expired.clone() }
 });
 
+graphql_object!(SystemInfo: Context |&self| {
+    field name() -> String { self.name.clone() }
+    field version() -> String { self.version.clone() }
+});
+
 graphql_object!(Query: Context |&self| {
   field user(&executor, id: i32) -> Option<UsersData> {
     let context = executor.context();
@@ -42,5 +49,25 @@ graphql_object!(Query: Context |&self| {
   field token(&executor, id: i32) -> Option<Tokens> {
     let context = executor.context();
     context.token(id)
+  }
+  field owned_tokens(&executor, address: String) -> Vec<Tokens> {
+    let context = executor.context();
+    context.owned_tokens(&address)
+  }
+  field owned_identities(&executor, address: String) -> Vec<Identities> {
+    let context = executor.context();
+    context.owned_identities(&address)
+  }
+  field get_token_info(&executor, token_hash: String) -> Option<(UsersData, Identities)> {
+    let context = executor.context();
+    context.get_token_info(&token_hash)
+  }
+
+  field system_info(&executor) -> Option<SystemInfo> {
+    let context = executor.context();
+    Some(SystemInfo {
+        name: "hello".to_owned(),
+        version: "world".to_owned(),
+    })
   }
 });

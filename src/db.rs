@@ -8,6 +8,7 @@ use std::collections::HashMap;
 use std::cell::RefCell;
 use std::sync::Arc;
 use std::sync::Mutex;
+use std::vec::Vec;
 
 pub struct Database {
     mysql: MysqlDatabase,
@@ -145,6 +146,45 @@ impl Database {
                 expired: String::from(&data[0].expired),
             })
         }
+    }
+
+    pub fn owned_tokens(&self, address: &str) -> Vec<Tokens> {
+        &self.sync_tokens();
+        let mut result: Vec<Tokens> = vec![];
+        let owners = &self.mysql.get_users_via_address(address);
+        if owners.len() > 0 {
+            let tokens = &self.mysql.get_tokens_via_owner_id(owners[0].id);
+            for token in tokens {
+                result.push(Tokens{
+                    id: token.id,
+                    owner_id: token.owner_id,
+                    identity_id: token.identity_id,
+                    token_hash: String::from(&token.token_hash),
+                    cost: String::from(&token.cost),
+                    data: String::from(&token.data),
+                    data_type: String::from(&token.data_type),
+                    expired: String::from(&token.expired),
+                })
+            }
+        }
+        result
+    }
+
+    pub fn owned_identities(&self, address: &str) -> Vec<Identities> {
+        &self.sync_identities();
+        let mut result: Vec<Identities> = vec![];
+        let owners = &self.mysql.get_users_via_address(address);
+        if owners.len() > 0 {
+            let identities = &self.mysql.get_identities_via_owner_id(owners[0].id);
+            for identity in identities {
+                result.push(Identities{
+                    id: identity.id,
+                    owner_id: identity.owner_id,
+                    identity_hash: String::from(&identity.identity_hash),
+                })
+            }
+        }
+        result
     }
 
     pub fn sync_tokens(&self) {

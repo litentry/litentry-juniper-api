@@ -27,6 +27,19 @@ pub struct Tokens {
 }
 
 #[derive(Queryable)]
+pub struct TokensFull {
+    pub id: i32,
+    pub owner_id: i32,
+    pub identity_id: i32,
+    pub token_hash: String,
+    pub cost: String,
+    pub data: String,
+    pub data_type: String,
+    pub expired: String,
+    pub identity_hash: String,
+}
+
+#[derive(Queryable)]
 pub struct LitentryIndex {
     pub id: i32,
     pub identity_index: i32,
