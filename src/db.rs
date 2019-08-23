@@ -3,7 +3,7 @@ extern crate juniper;
 
 use litentry_substrate_rpc as rpc;
 use litentry_juniper_database::Database as MysqlDatabase;
-use crate::model::{UsersData, Identities, Tokens};
+use crate::model::{UsersData, Identities, Tokens, VerifyResult, TokenOwnerIdentity};
 use std::collections::HashMap;
 use std::cell::RefCell;
 use std::sync::Arc;
@@ -185,6 +185,32 @@ impl Database {
             }
         }
         result
+    }
+
+    pub fn verify_token(&self, token_hash: &str, signature: &str, raw_data: &str) -> VerifyResult {
+        let identity_owner = &self.mysql.get_tokens_identity_owner_via_hash(token_hash);
+        if identity_owner.len() > 0 {
+            VerifyResult {
+                verify_result: litentry_substrate_utils::verify_signature(&identity_owner[0].2.public_key, signature, raw_data)
+            }
+        } else {
+            VerifyResult {
+                verify_result: false
+            }
+        }
+    }
+
+    pub fn get_token_info(&self, token_hash: &str) -> Option<TokenOwnerIdentity> {
+        let identity_owner = &self.mysql.get_tokens_identity_owner_via_hash(token_hash);
+        if identity_owner.len() > 0 {
+            Some(TokenOwnerIdentity {
+                token_hash: token_hash.to_owned(),
+                identity_hash: identity_owner[0].1.identity_hash.to_owned(),
+                owner_address: identity_owner[0].2.address.to_owned(),
+            })
+        } else {
+            None
+        }
     }
 
     pub fn sync_tokens(&self) {

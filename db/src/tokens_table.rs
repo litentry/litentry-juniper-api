@@ -23,8 +23,17 @@ impl Database {
         tokens.filter(owner_id.eq(query_id)).load::<models::Tokens>(&self.establish_connection()).expect("Error load Users.")
     }
 
-    pub fn get_tokens_owners(&self, query_id: i32) -> std::vec::Vec<(models::Tokens, models::Identities)> {
-        tokens.inner_join(schema::identities::dsl::identities.on(identity_id.eq(schema::identities::dsl::id)))
-            .load::<(models::Tokens, models::Identities)>(&self.establish_connection()).expect("Error load Users.")
+    pub fn get_tokens_identity_owner_via_id(&self, query_id: i32) -> std::vec::Vec<(models::Tokens, models::Identities, models::Users)> {
+        tokens.filter(id.eq(query_id))
+            .inner_join(schema::identities::dsl::identities.on(identity_id.eq(schema::identities::dsl::id)))
+            .inner_join(schema::users::dsl::users.on(owner_id.eq(schema::users::dsl::id)))
+            .load::<(models::Tokens, models::Identities, models::Users)>(&self.establish_connection()).expect("Error load Users.")
+    }
+
+    pub fn get_tokens_identity_owner_via_hash(&self, query_hash: &str) -> std::vec::Vec<(models::Tokens, models::Identities, models::Users)> {
+        tokens.filter(token_hash.like(query_hash))
+            .inner_join(schema::identities::dsl::identities.on(identity_id.eq(schema::identities::dsl::id)))
+            .inner_join(schema::users::dsl::users.on(owner_id.eq(schema::users::dsl::id)))
+            .load::<(models::Tokens, models::Identities, models::Users)>(&self.establish_connection()).expect("Error load Users.")
     }
 }

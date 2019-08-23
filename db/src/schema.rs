@@ -39,7 +39,7 @@ table! {
 
 joinable!(tokens -> users (owner_id));
 joinable!(tokens -> identities (identity_id));
-
+joinable!(identities -> users (owner_id));
 allow_tables_to_appear_in_same_query!(
     tokens,
     users,

@@ -1,7 +1,7 @@
 extern crate juniper;
 
 use crate::model;
-use model::{UsersData, Identities, Tokens, SystemInfo};
+use model::{UsersData, Identities, Tokens, SystemInfo, VerifyResult, TokenOwnerIdentity};
 use crate::db::Database as Context;
 use std::vec::Vec;
 
@@ -37,6 +37,16 @@ graphql_object!(SystemInfo: Context |&self| {
     field version() -> String { self.version.clone() }
 });
 
+graphql_object!(VerifyResult: Context |&self| {
+    field verify_result() -> bool { self.verify_result }
+});
+
+graphql_object!(TokenOwnerIdentity: Context |&self| {
+    field token_hash() -> String { self.token_hash.clone() }
+    field identity_hash() -> String { self.identity_hash.clone() }
+    field owner_address() -> String { self.owner_address.clone() }
+});
+
 graphql_object!(Query: Context |&self| {
   field user(&executor, id: i32) -> Option<UsersData> {
     let context = executor.context();
@@ -58,9 +68,14 @@ graphql_object!(Query: Context |&self| {
     let context = executor.context();
     context.owned_identities(&address)
   }
-  field get_token_info(&executor, token_hash: String) -> Option<(UsersData, Identities)> {
+  field get_token_info(&executor, token_hash: String) -> Option<(TokenOwnerIdentity)> {
     let context = executor.context();
     context.get_token_info(&token_hash)
+  }
+
+  field verify_token(&executor, token_hash: String, signature: String, raw_data: String) -> VerifyResult {
+    let context = executor.context();
+    context.verify_token(&token_hash, &signature, &raw_data)
   }
 
   field system_info(&executor) -> Option<SystemInfo> {
