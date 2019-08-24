@@ -8,7 +8,7 @@
 }
 
 {
-  identity (id: 1) {
+  identity (id: 0) {
     id
     identityHash
     ownerId
@@ -25,6 +25,42 @@
     data
     dataType
     expired
+  }
+}
+
+{
+  ownedTokens (address: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY") {
+    id
+    identityId
+    ownerId
+    tokenHash
+    cost
+    data
+    dataType
+    expired
+  }
+}
+
+{
+  ownedIdentities (address: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY") {
+    id
+    ownerId
+    identityHash
+  }
+}
+
+{
+  getTokenInfo(tokenHash: "e9af6bc9c7584ebc90a637f139c1dc5016ce91c9699ff3a6b652686f72a0278c") {
+	tokenHash
+    identityHash
+    ownerAddress
+  }
+}
+
+{
+  systemInfo {
+	version
+    name
   }
 }
 

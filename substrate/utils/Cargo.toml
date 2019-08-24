@@ -1,0 +1,13 @@
+[package]
+name = "litentry-substrate-utils"
+version = "0.1.0"
+authors = ["zhoujun <junius.zhou@gmail.com>"]
+edition = "2018"
+
+
+[dependencies]
+substrate-primitives = {git = "https://github.com/paritytech/substrate"}
+substrate-application-crypto = {git = "https://github.com/paritytech/substrate"}
+hex = "0.3.2"
+byteorder = "1.3.2"
+parity-scale-codec = { version = "1.0.0", features = ["derive"] }
