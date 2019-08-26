@@ -2,11 +2,13 @@ extern crate substrate_primitives;
 extern crate substrate_application_crypto;
 extern crate hex;
 extern crate byteorder;
+// extern crate parity_scale_codec;
 
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt, WriteBytesExt};
 use substrate_primitives::{sr25519, sr25519::{Pair, Signature}, crypto, crypto::{Ss58Codec}};
 use std::io::Cursor;
 use std::vec::Vec;
+// use parity_scale_codec::DecodeLength;
 
 pub fn verify_signature(address: &str, signature_str: &str, message: &str) -> bool {
     let public_key: sr25519::Public = get_public_from_address(address).unwrap();
@@ -123,3 +125,34 @@ pub fn u64_to_little_vec(data: u64) -> Vec::<u8> {
     result.write_u64::<LittleEndian>(data).unwrap();
     result
 }
+
+pub fn decode_events(bytes: &[u8]) {
+    // TODO we just deal with events number less than 64 now.
+    let data = bytes.to_vec();
+    let event_length = data[0] / 4;
+    println!("include {} events in system events storage.", event_length);
+    let mut cursor = 0;
+    for index in 0..event_length {
+        cursor += 1; // skip first zero since its hardcoded in phase
+        cursor += 4; // skip four bytes as phase it is little endian, 1 means
+        cursor += 1;
+        let module_index = data[cursor];
+        cursor += 1;
+        let event_index = data[cursor];
+
+        if module_index == 5 {
+            if event_index == 0 {
+                cursor += 64;
+            } else if event_index == 1 {
+                cursor += 96;
+            }
+        }
+        cursor += 1; // skip inputs
+        println!("module {} and event {}", module_index, event_index);
+        let if_inputs = data[cursor];
+        if if_inputs != 0 {
+            cursor += 32; // skip logs
+        }
+    }
+}
+
