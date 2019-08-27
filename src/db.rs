@@ -189,6 +189,7 @@ impl Database {
 
     pub fn verify_token(&self, token_hash: &str, signature: &str, raw_data: &str) -> VerifyResult {
         let identity_owner = &self.mysql.get_tokens_identity_owner_via_hash(token_hash);
+
         if identity_owner.len() > 0 {
             VerifyResult {
                 verify_result: litentry_substrate_utils::verify_signature(&identity_owner[0].2.public_key, signature, raw_data)

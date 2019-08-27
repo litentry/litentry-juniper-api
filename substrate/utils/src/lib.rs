@@ -126,6 +126,14 @@ pub fn u64_to_little_vec(data: u64) -> Vec::<u8> {
     result
 }
 
+pub fn hexstr_to_vec(mut hexstr: String) -> Vec<u8> {
+    if hexstr.starts_with("0x") {
+        hex::decode(hexstr.split_off(2)).unwrap()
+    } else {
+        hex::decode(&hexstr).unwrap()
+    }
+}
+
 pub fn decode_events(bytes: &[u8]) {
     // TODO we just deal with events number less than 64 now.
     let data = bytes.to_vec();
@@ -142,8 +150,15 @@ pub fn decode_events(bytes: &[u8]) {
 
         if module_index == 5 {
             if event_index == 0 {
+                let account = hex::encode(&data[cursor+1..cursor+33]);
+                let id_hash = hex::encode(&data[cursor+33..cursor+65]);
+                println!("account is {:?}, id hash is {:?}", account, id_hash);
                 cursor += 64;
             } else if event_index == 1 {
+                let account = hex::encode(&data[cursor+1..cursor+33]);
+                let id_hash = hex::encode(&data[cursor+33..cursor+65]);
+                let token_hash = hex::encode(&data[cursor+65..cursor+97]);
+                println!("account is {:?}, id hash is {:?}, token hash {:?} ", account, id_hash, token_hash);
                 cursor += 96;
             }
         }

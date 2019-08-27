@@ -11,11 +11,12 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
-mod model;
-mod schema;
-mod db;
-use db::Database;
+pub mod model;
+pub mod schema;
+pub mod db;
+mod subscribe;
 
+use db::Database;
 use futures::future;
 use hyper::rt::{self, Future};
 use hyper::service::service_fn;
@@ -27,11 +28,12 @@ use std::sync::Arc;
 impl juniper::Context for Database {}
 
 fn main() {
-    pretty_env_logger::init();
-
+    let url = "192.168.2.158:9944";
     let addr = ([0, 0, 0, 0], 3000).into();
 
+    pretty_env_logger::init();
     let db = Arc::new(Database::new());
+    subscribe::subscribe_sync(db.clone(), &url);
     let root_node = Arc::new(RootNode::new(schema::Query, EmptyMutation::<Database>::new()));
 
     let new_service = move || {

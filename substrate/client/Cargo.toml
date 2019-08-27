@@ -14,6 +14,7 @@ edition = "2018"
 log = "0.4"
 substrate-api-client = {git = "https://github.com/scs/substrate-api-client"}
 litentry-substrate-utils = {path = "../utils"}
+litentry-juniper-database = {path = "../../db"}
 
 [dependencies.codec]
 default-features = false

@@ -2579,6 +2579,7 @@ dependencies = [
 name = "litentry-substrate-client"
 version = "0.1.0"
 dependencies = [
+ "litentry-juniper-database 0.1.0",
  "litentry-substrate-utils 0.1.0",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "node-primitives 2.0.0 (git+https://github.com/paritytech/substrate?rev=6d47fd919b4d86e4348c6c19d99c80372587d215)",
