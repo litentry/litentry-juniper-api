@@ -6,10 +6,10 @@ extern crate hyper;
 mod request;
 mod response;
 
-pub use request::Request;
-pub use response::Response;
-pub use response::{Codes, StatusCode};
-
-pub type Result = hyper::Result<Response>;
-pub type Error = hyper::error::Error;
+//pub use request::Request;
+//pub use response::Response;
+//pub use response::{Codes, StatusCode};
+//
+//pub type Result = hyper::Result<Response>;
+//pub type Error = hyper::error::Error;
 

@@ -57,6 +57,19 @@
   }
 }
 
+Secret phrase `favorite liar zebra assume hurt cage any damp inherit rescue delay panic` is account:
+  Secret seed: 0x235c69907d33b85f27bd78e73ff5d0c67bd4894515cc30c77f4391859bc1a3f2
+  Public key (hex): 0x6ce96ae5c300096b09dbd4567b0574f6a1281ae0e5cfe4f6b0233d1821f6206b
+  Address (SS58): 5EXWNJuoProc7apm1JS8m9RTqV3vVwR9dCg6sQVpKnoHtJ68
+ message is "message"
+{
+  verifyToken(tokenHash: "ea03bc0b1b1fa88e1168106dca99ccd654ede7a9921b79fd75d167196cbe9f7b",
+    signature: "0x54780cfcfacda8afc1702ec040b919ef2114ccb81a8101388cd967ad609cdd762516b956d2f57e731ac7a14b731abf5df33692ff8c2da90dac5e821d99b47682",
+    rawData: "0x6d657373616765") {
+    verifyResult
+  }
+}
+
 {
   systemInfo {
 	version

@@ -33,7 +33,7 @@ fn main() {
 
     pretty_env_logger::init();
     let db = Arc::new(Database::new());
-    subscribe::subscribe_sync(db.clone(), &url);
+    // subscribe::subscribe_sync(db.clone(), &url);
     let root_node = Arc::new(RootNode::new(schema::Query, EmptyMutation::<Database>::new()));
 
     let new_service = move || {

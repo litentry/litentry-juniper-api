@@ -2,19 +2,45 @@ extern crate substrate_primitives;
 extern crate substrate_application_crypto;
 extern crate hex;
 extern crate byteorder;
+//#[macro_use]
+//extern crate hex_literal;
 // extern crate parity_scale_codec;
 
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt, WriteBytesExt};
-use substrate_primitives::{sr25519, sr25519::{Pair, Signature}, crypto, crypto::{Ss58Codec}};
+use substrate_primitives::{sr25519, sr25519::{Signature}, Pair, crypto, crypto::{Ss58Codec}};
 use std::io::Cursor;
 use std::vec::Vec;
+
+// use hex_literal::hex;
 // use parity_scale_codec::DecodeLength;
 
-pub fn verify_signature(address: &str, signature_str: &str, message: &str) -> bool {
-    let public_key: sr25519::Public = get_public_from_address(address).unwrap();
+pub fn sign(message: &str) -> Signature {
+    let seed = "0x235c69907d33b85f27bd78e73ff5d0c67bd4894515cc30c77f4391859bc1a3f2";
+    let pair = sr25519::Pair::from_seed(&hex_str_to_hash(seed));
+
+    let signature = pair.sign(&decode_hex_hash(message)[..]);
+
+    println!("signature result is {:?}", hex::encode(&signature));
+    signature
+}
+
+pub fn verify_signature(public_key_str: &str, signature_str: &str, message: &str) -> bool {
+    sign(message);
+    println!("verify_signature sender public key is {}", public_key_str);
+//    let a = sr25519::Public::from_string_with_version();
+    let public_key: sr25519::Public = sr25519::Public::from_raw(hex_str_to_hash(public_key_str));
+    println!("after decode public key is {:?}", &public_key);
     let raw_data = &decode_hex_hash(message)[..];
-    let signature = Signature::from_slice(&decode_hex_hash(signature_str)[..]);
-    <Pair as crypto::Pair>::verify(&signature, &raw_data, &public_key)
+    println!("raw data is {:?}, {}", &raw_data, message);
+    // check signature length to avoid panic.
+    let signature_vec = &decode_hex_hash(signature_str);
+    if signature_vec.len() != 64 {
+        println!("signature from rpc with wrong length.");
+        return false;
+    }
+    let signature = Signature::from_slice(&signature_vec[..]);
+    println!("go to verify method.");
+    <sr25519::Pair as crypto::Pair>::verify(&signature, &raw_data, &public_key)
 }
 
 pub fn get_public_from_address(address: &str) -> Result<sr25519::Public, &str> {
@@ -23,6 +49,13 @@ pub fn get_public_from_address(address: &str) -> Result<sr25519::Public, &str> {
         Ok((key, _)) => Ok(key),
         Err(_) => Err("invalid address"),
     }
+}
+
+pub fn hex_str_to_hash(hex_str: &str) -> [u8; 32] {
+    let _unhex = decode_hex_hash(hex_str);
+    let mut a = [0u8; 32];
+    a.copy_from_slice(&_unhex.as_slice()[0..32]);
+    a
 }
 
 // hex string to i128

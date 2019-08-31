@@ -195,6 +195,7 @@ impl Database {
                 verify_result: litentry_substrate_utils::verify_signature(&identity_owner[0].2.public_key, signature, raw_data)
             }
         } else {
+            println!("token owner not found in db.");
             VerifyResult {
                 verify_result: false
             }
