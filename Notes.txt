@@ -8,4 +8,8 @@ https://github.com/seanmonstar/warp/tree/master/examples
 
 http://alex.amiran.it/post/2018-08-16-rust-graphql-webserver-with-warp-juniper-and-mongodb.html
 
+# compilation error in ubuntu.
+tokio tls not support openssl 1.1.1, we should use 1.0.* openssl.
+
 #
+

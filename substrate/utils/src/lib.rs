@@ -19,7 +19,7 @@ pub fn sign(message: &str) -> Signature {
     let pair = sr25519::Pair::from_seed(&hex_str_to_hash(seed));
 
     let signature = pair.sign(&decode_hex_hash(message)[..]);
-
+    println!("Pair public key is {:?}", &pair.public());
     println!("signature result is {:?}", hex::encode(&signature));
     signature
 }

@@ -1,0 +1,4 @@
+# deploy nginx and connection
+https://medium.com/@meleacrypto/kusama-polkadot-connect-ui-with-our-node-593d790f39f0
+
+#
