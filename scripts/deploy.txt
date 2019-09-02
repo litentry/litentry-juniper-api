@@ -1,4 +1,9 @@
 # deploy nginx and connection
 https://medium.com/@meleacrypto/kusama-polkadot-connect-ui-with-our-node-593d790f39f0
 
-#
+# get and run mysql docker
+sudo docker pull mysql
+sudo docker run --name first-mysql -p 3306:3306 -e MYSQL\_ROOT\_PASSWORD=12345678 -d mysql
+
+# run api docker.
+
