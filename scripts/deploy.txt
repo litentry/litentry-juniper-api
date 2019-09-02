@@ -6,4 +6,6 @@ sudo docker pull mysql
 sudo docker run --name first-mysql -p 3306:3306 -e MYSQL\_ROOT\_PASSWORD=12345678 -d mysql
 
 # run api docker.
+sudo docker run --name litentry-juniper-api -p 3000:3000 -d litentry-api
 
+#
