@@ -22,7 +22,7 @@ members = [
 
 [dependencies]
 warp = "0.1"
-serde_json = "1"
+serde_json = "1.0"
 serde = "1.0"
 serde_derive = "1.0"
 url = "1.7"
@@ -38,6 +38,7 @@ env_logger = "0.5"
 pretty_env_logger = "0.3.0"
 websocket = "0.22.4"
 ipfsapi = "0.2"
+ws = "0.7"
 
 litentry-juniper-database = {path  = "db"}
 litentry-hyper = {path = "hyper"}

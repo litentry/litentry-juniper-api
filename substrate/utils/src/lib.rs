@@ -10,6 +10,7 @@ use byteorder::{BigEndian, LittleEndian, ReadBytesExt, WriteBytesExt};
 use substrate_primitives::{sr25519, sr25519::{Signature}, Pair, crypto, crypto::{Ss58Codec}};
 use std::io::Cursor;
 use std::vec::Vec;
+use substrate_primitives::{blake2_256, twox_128};
 
 // use hex_literal::hex;
 // use parity_scale_codec::DecodeLength;
@@ -204,3 +205,10 @@ pub fn decode_events(bytes: &[u8]) {
     }
 }
 
+pub fn twox_storage_key_hash(module: &str, storage_key_name: &str) -> String {
+    let mut key = [module, storage_key_name].join(" ").as_bytes().to_vec();
+    let mut keyhash;
+    keyhash = hex::encode(twox_128(&key));
+    keyhash.insert_str(0, "0x");
+    keyhash
+}

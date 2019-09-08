@@ -10,6 +10,7 @@ extern crate juniper_codegen;
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
+extern crate ws;
 
 pub mod model;
 pub mod schema;
@@ -28,12 +29,12 @@ use std::sync::Arc;
 impl juniper::Context for Database {}
 
 fn main() {
-    let url = "192.168.2.158:9944";
+    let url = "ws://192.168.2.158:9944";
     let addr = ([0, 0, 0, 0], 3000).into();
 
     pretty_env_logger::init();
     let db = Arc::new(Database::new());
-    // subscribe::subscribe_sync(db.clone(), &url);
+    subscribe::subscribe_sync(db.clone(), url);
     let root_node = Arc::new(RootNode::new(schema::Query, EmptyMutation::<Database>::new()));
 
     let new_service = move || {

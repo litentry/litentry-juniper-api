@@ -45,3 +45,18 @@ pub struct LitentryIndex {
     pub identity_index: i32,
     pub token_index: i32,
 }
+
+
+//#[derive(Queryable)]
+//pub struct Users {
+//    pub address: String,
+//    pub public_key: String,
+//    pub balance: String,
+//}
+//
+//
+//IdentityCreated(AccountId, Hash),
+//AuthorizedTokenCreated(AccountId, Hash, Hash),
+//AuthorizedTokenTransferred(AccountId, AccountId, Hash),
+
+
