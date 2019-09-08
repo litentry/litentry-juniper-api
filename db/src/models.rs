@@ -47,16 +47,22 @@ pub struct LitentryIndex {
 }
 
 
-//#[derive(Queryable)]
-//pub struct Users {
-//    pub address: String,
-//    pub public_key: String,
-//    pub balance: String,
-//}
-//
-//
-//IdentityCreated(AccountId, Hash),
-//AuthorizedTokenCreated(AccountId, Hash, Hash),
-//AuthorizedTokenTransferred(AccountId, AccountId, Hash),
+#[derive(Queryable)]
+pub struct NewIdentityEvent {
+    pub id: i32,
+    pub block_hash: String,
+    pub address: String,
+    pub identity_hash: String,
+}
+
+#[derive(Queryable)]
+pub struct NewTokenEvent {
+    pub id: i32,
+    pub block_hash: String,
+    pub owner_address: String,
+    pub identity_hash: String,
+    pub token_hash: String,
+}
+
 
 

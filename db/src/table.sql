@@ -42,3 +42,21 @@ CREATE TABLE `litentry_index` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+CREATE TABLE `new_identity_event` (
+  `id` int(11) NOT NULL,
+  `block_hash` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `identity_hash` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `new_token_event` (
+  `id` int(11) NOT NULL,
+  `block_hash` varchar(100) NOT NULL,
+  `owner_address` varchar(100) NOT NULL,
+  `identity_hash` varchar(100) NOT NULL,
+  `token_hash` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+

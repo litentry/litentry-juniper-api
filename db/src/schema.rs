@@ -37,6 +37,25 @@ table! {
     }
 }
 
+table! {
+    new_identity_event (id) {
+        id -> Integer,
+        block_hash -> Text,
+        address -> Text,
+        identity_hash -> Text,
+    }
+}
+
+table! {
+    new_token_event (id) {
+        id -> Integer,
+        block_hash -> Text,
+        owner_address -> Text,
+        identity_hash -> Text,
+        token_hash -> Text,
+    }
+}
+
 joinable!(tokens -> users (owner_id));
 joinable!(tokens -> identities (identity_id));
 joinable!(identities -> users (owner_id));

@@ -7,6 +7,7 @@ pub mod users_table;
 pub mod identities_table;
 pub mod tokens_table;
 pub mod litentry_table;
+pub mod event_table;
 
 use diesel::prelude::*;
 
