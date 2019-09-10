@@ -43,7 +43,7 @@ CREATE TABLE `litentry_index` (
 
 
 CREATE TABLE `new_identity_event` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `block_hash` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `identity_hash` varchar(100) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `new_identity_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `new_token_event` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `block_hash` varchar(100) NOT NULL,
   `owner_address` varchar(100) NOT NULL,
   `identity_hash` varchar(100) NOT NULL,

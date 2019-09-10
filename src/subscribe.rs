@@ -55,9 +55,6 @@ pub fn subscribe_sync(db: Arc<Database>, url: &str) {
             "id": "1",
         }).to_string();
 
-    // let jsonreq = json_req::state_subscribe_storage(&key).to_string();
-
-    // litentry_substrate_client::subscribe_events(url, events_in);
     start_rpc_client_thread(url.to_owned(), jsonreq, events_in, on_subscription_msg);
 
     thread::Builder::new().spawn( move || {
