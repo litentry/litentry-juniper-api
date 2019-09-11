@@ -5,8 +5,10 @@ use std::sync::Arc;
 use serde_json::{json, Value};
 use std::sync::mpsc::Sender as ThreadOut;
 use ws::{connect, CloseCode, Handler, Handshake, Message, Result, Sender};
+use litentry_runtime::LitentryEvents;
 
 pub type OnMessageFn = fn(msg: Message, out: Sender, result: ThreadOut<String>) -> Result<()>;
+
 pub struct RpcClient {
     pub out: Sender,
     pub request: String,
@@ -26,22 +28,24 @@ impl Handler for RpcClient {
 }
 
 pub fn on_subscription_msg(msg: Message, _out: Sender, result: ThreadOut<String>) -> Result<()> {
+    println!("on_subscription_msg");
     let retstr = msg.as_text().unwrap();
-    let value: serde_json::Value = serde_json::from_str(retstr).unwrap();
-    match value["id"].as_str() {
-        Some(_idstr) => {},
-        _ => {
-
-            match value["method"].as_str() {
-                Some("state_storage") => {
-                    let _changes = &value["params"]["result"]["changes"];
-                    let _res_str = _changes[0][1].as_str().unwrap().to_string();
-                    result.send(_res_str).unwrap();
-                }
-                _ => println!("unsupported method"),
-            }
-        },
-    };
+    result.send(retstr.to_owned()).unwrap();
+//    let value: serde_json::Value = serde_json::from_str(retstr).unwrap();
+//    match value["id"].as_str() {
+//        Some(_idstr) => {},
+//        _ => {
+//
+//            match value["method"].as_str() {
+//                Some("state_storage") => {
+//                    let _changes = &value["params"]["result"]["changes"];
+//                    let _res_str = _changes[0][1].as_str().unwrap().to_string();
+//                    result.send(_res_str).unwrap();
+//                }
+//                _ => println!("unsupported method"),
+//            }
+//        },
+//    };
     Ok(())
 }
 
@@ -54,18 +58,36 @@ pub fn subscribe_sync(db: Arc<Database>, url: &str) {
             "jsonrpc": "2.0",
             "id": "1",
         }).to_string();
-
+    println!("start rpc thread.");
     start_rpc_client_thread(url.to_owned(), jsonreq, events_in, on_subscription_msg);
 
-    thread::Builder::new().spawn( move || {
+    thread::Builder::new().spawn(move || {
         loop {
             println!("start to try get events");
             let event_str = events_out.recv().unwrap();
 
-            let _unhex = litentry_substrate_utils::hexstr_to_vec(event_str);
+            let value: serde_json::Value = serde_json::from_str(&event_str).unwrap();
+            if value["id"].as_str().is_some() || value["method"].as_str() != Some("state_storage") {
+                continue;
+            }
+            let block = &value["params"]["result"]["block"].as_str().unwrap();
+            let _changes = &value["params"]["result"]["changes"];
+            // format is [[key, value]]
+            let _res_str = _changes[0][1].as_str().unwrap().to_string();
+
+
+            let _unhex = litentry_substrate_utils::hexstr_to_vec(_res_str);
             let mut _er_enc = _unhex.as_slice();
             println!("raw message {:?}", &mut _er_enc);
-            litentry_substrate_utils::decode_events(&mut _er_enc);
+
+
+            let events = litentry_substrate_utils::decode_events(&mut _er_enc);
+            for event in events {
+                match event {
+                    LitentryEvents::NewIdentity(_, address, hash) => db.mysql.insert_new_identity_event(block, &address, &hash),
+                    LitentryEvents::NewToken(_, address, identity, token) => db.mysql.insert_new_token_event(block, &address, &identity, &token),
+                };
+            }
         }
     });
 }

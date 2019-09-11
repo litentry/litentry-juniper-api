@@ -11,7 +11,7 @@ use std::sync::Mutex;
 use std::vec::Vec;
 
 pub struct Database {
-    mysql: MysqlDatabase,
+    pub mysql: MysqlDatabase,
     //TODO now diesel not support u64, should upgrade to u64 after diesel can.
     index_map: Arc<Mutex<RefCell<HashMap<String, i32>>>>,
 }

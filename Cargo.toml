@@ -17,6 +17,7 @@ members = [
 "substrate/rpc",
 "substrate/utils",
 "substrate/client",
+"litentry",
 "tests",
 ]
 
@@ -45,6 +46,6 @@ litentry-hyper = {path = "hyper"}
 litentry-substrate-rpc = {path = "substrate/rpc"}
 litentry-substrate-utils = {path = "substrate/utils"}
 litentry-substrate-client = {path = "substrate/client"}
-
+litentry-runtime = {path = "litentry"}
 
 

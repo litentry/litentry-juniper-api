@@ -39,8 +39,13 @@
       <sourceFolder url="file://$MODULE_DIR$/substrate/client/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/substrate/client/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/substrate/client/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/litentry/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/litentry/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/litentry/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/litentry/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/db/target" />
       <excludeFolder url="file://$MODULE_DIR$/hyper/target" />
+      <excludeFolder url="file://$MODULE_DIR$/litentry/target" />
       <excludeFolder url="file://$MODULE_DIR$/substrate/client/target" />
       <excludeFolder url="file://$MODULE_DIR$/substrate/rpc/target" />
       <excludeFolder url="file://$MODULE_DIR$/substrate/tests/target" />

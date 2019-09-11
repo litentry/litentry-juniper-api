@@ -11,6 +11,7 @@ use substrate_primitives::{sr25519, sr25519::{Signature}, Pair, crypto, crypto::
 use std::io::Cursor;
 use std::vec::Vec;
 use substrate_primitives::{blake2_256, twox_128};
+use litentry_runtime::LitentryEvents;
 
 // use hex_literal::hex;
 // use parity_scale_codec::DecodeLength;
@@ -168,7 +169,8 @@ pub fn hexstr_to_vec(mut hexstr: String) -> Vec<u8> {
     }
 }
 
-pub fn decode_events(bytes: &[u8]) {
+pub fn decode_events(bytes: &[u8]) -> Vec<LitentryEvents> {
+    let mut result: Vec<LitentryEvents> = vec![];
     // TODO we just deal with events number less than 64 now.
     let data = bytes.to_vec();
     let event_length = data[0] / 4;
@@ -186,13 +188,22 @@ pub fn decode_events(bytes: &[u8]) {
             if event_index == 0 {
                 let account = hex::encode(&data[cursor+1..cursor+33]);
                 let id_hash = hex::encode(&data[cursor+33..cursor+65]);
-                println!("account is {:?}, id hash is {:?}", account, id_hash);
+                result.push(LitentryEvents::NewIdentity(
+                    "".to_owned(),
+                    account,
+                    id_hash,));
+                // println!("account is {:?}, id hash is {:?}", account, id_hash);
                 cursor += 64;
             } else if event_index == 1 {
                 let account = hex::encode(&data[cursor+1..cursor+33]);
                 let id_hash = hex::encode(&data[cursor+33..cursor+65]);
                 let token_hash = hex::encode(&data[cursor+65..cursor+97]);
-                println!("account is {:?}, id hash is {:?}, token hash {:?} ", account, id_hash, token_hash);
+                result.push(LitentryEvents::NewToken (
+                    "".to_owned(),
+                    account,
+                    id_hash,
+                    token_hash,));
+                // println!("account is {:?}, id hash is {:?}, token hash {:?} ", account, id_hash, token_hash);
                 cursor += 96;
             }
         }
@@ -203,6 +214,7 @@ pub fn decode_events(bytes: &[u8]) {
             cursor += 32; // skip logs
         }
     }
+    result
 }
 
 pub fn twox_storage_key_hash(module: &str, storage_key_name: &str) -> String {
