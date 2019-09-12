@@ -14,11 +14,12 @@ pub struct Database {
     pub mysql: MysqlDatabase,
     //TODO now diesel not support u64, should upgrade to u64 after diesel can.
     index_map: Arc<Mutex<RefCell<HashMap<String, i32>>>>,
+    pub substrate_rpc: rpc::Rpc,
 }
 
 impl Database {
-    pub fn new() -> Database {
-        let uri = "mysql://root:12345678@192.168.2.158:3306/litentry";
+    pub fn new(uri: &str, rpc_str: &str) -> Database {
+        // let uri = "mysql://root:12345678@192.168.2.158:3306/litentry";
         let mysql = MysqlDatabase::new(&uri);
         let index = mysql.get_litentry_index();
         let index_map = Arc::new(Mutex::new(RefCell::new(HashMap::new())));
@@ -34,6 +35,7 @@ impl Database {
         Database {
             mysql,
             index_map,
+            substrate_rpc: rpc::Rpc::new(rpc_str),
         }
     }
 
@@ -46,7 +48,7 @@ impl Database {
             return None;
         }
 
-        let new_balance = rpc::get_balance(&data[0].address);
+        let new_balance = &self.substrate_rpc.get_balance(&data[0].address);
         println!("query balance in chain.");
 
         match new_balance {
@@ -82,7 +84,7 @@ impl Database {
     }
 
     pub fn sync_identities(&self) {
-        let count_in_chain = rpc::get_identity_count();
+        let count_in_chain = &self.substrate_rpc.get_identity_count();
         if count_in_chain.is_some() {
             let count_in_db =  self.index_map.lock().unwrap().borrow().get("identities").unwrap().to_owned();
             let count_in_chain = count_in_chain.unwrap() as i32;
@@ -90,12 +92,12 @@ impl Database {
             if count_in_chain > count_in_db {
                 let begin = count_in_db + 1;
                 for index in begin..count_in_chain {
-                    let new_identity = rpc::get_identity_via_index(index);
+                    let new_identity = &self.substrate_rpc.get_identity_via_index(index);
                     if new_identity.is_some() {
-                        let identity = new_identity.unwrap();
-                        let owner_public_key = rpc::get_identity_owner_via_hash(&identity);
+                        let identity = new_identity.as_ref().unwrap();
+                        let owner_public_key = &self.substrate_rpc.get_identity_owner_via_hash(&identity);
                         if owner_public_key.is_some() {
-                            let public_key = owner_public_key.unwrap();
+                            let public_key = owner_public_key.as_ref().unwrap();
                             let owner_id = &self.mysql.get_users_via_public_key(&public_key);
                             println!("insert new identity. index {} owner_id {} hash {:?}", index, owner_id[0].id, &identity);
                             let insert_result = &self.mysql.insert_identities(index, owner_id[0].id, &identity);
@@ -216,7 +218,7 @@ impl Database {
     }
 
     pub fn sync_tokens(&self) {
-        let count_in_chain = rpc::get_token_count();
+        let count_in_chain = &self.substrate_rpc.get_token_count();
         if count_in_chain.is_some() {
             let count_in_db =  self.index_map.lock().unwrap().borrow().get("tokens").unwrap().to_owned();
             let count_in_chain = count_in_chain.unwrap() as i32;
@@ -224,18 +226,18 @@ impl Database {
             if count_in_chain > count_in_db {
                 let begin = count_in_db + 1;
                 for index in begin..count_in_chain {
-                    let new_token_hash = rpc::get_token_hash_via_index(index);
+                    let new_token_hash = &self.substrate_rpc.get_token_hash_via_index(index);
                     if new_token_hash.is_some() {
-                        let new_token = rpc::get_token_via_hash(&new_token_hash.unwrap());
+                        let new_token = &self.substrate_rpc.get_token_via_hash(&new_token_hash.as_ref().unwrap());
                         if new_token.is_some() {
-                            let token = new_token.unwrap();
-                            let owner_public_key = rpc::get_token_owner_via_hash(&token.0);
+                            let token = new_token.as_ref().unwrap();
+                            let owner_public_key = &self.substrate_rpc.get_token_owner_via_hash(&token.0);
                             if owner_public_key.is_some() {
-                                let public_key = owner_public_key.unwrap();
+                                let public_key = owner_public_key.as_ref().unwrap();
                                 let owner_id = &self.mysql.get_users_via_public_key(&public_key);
-                                let token_identity = rpc::get_token_identity_via_hash(&token.0);
+                                let token_identity = &self.substrate_rpc.get_token_identity_via_hash(&token.0);
                                 if token_identity.is_some() {
-                                    let identity = token_identity.unwrap();
+                                    let identity = token_identity.as_ref().unwrap();
                                     let identity_id = &self.mysql.get_identities_via_hash(&identity);
                                     println!("insert new token. index {} owner_id {} identity_id {} token hash {} balance {}",
                                              index, owner_id[0].id, identity_id[0].id, &token.0, &token.1);

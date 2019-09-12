@@ -60,3 +60,8 @@ CREATE TABLE `new_token_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+INSERT INTO users(`name`, address, public_key, balance) VALUES( "Alice", "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d", 0);
+INSERT INTO users(`name`, address, public_key, balance) VALUES( "Bob", "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48", 0);
+INSERT INTO litentry_index(id, identity_index, token_index) VALUES(0, 0, 0);
+
+

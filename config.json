@@ -1,0 +1,7 @@
+{
+  "mysql_url": "mysql://root:12345678@192.168.2.158:3306/litentry",
+  "substrate_url": "ws://192.168.2.158",
+  "rpc_port": 9933,
+  "ws_port": 9944
+}
+
