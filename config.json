@@ -1,6 +1,6 @@
 {
-  "mysql_url": "mysql://root:12345678@192.168.2.158:3306/litentry",
-  "substrate_url": "ws://192.168.2.158",
+  "mysql_url": "mysql://root:12345678@127.0.0.1:3306/litentry",
+  "substrate_node": "127.0.0.1",
   "rpc_port": 9933,
   "ws_port": 9944
 }
