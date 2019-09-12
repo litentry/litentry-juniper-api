@@ -44,8 +44,8 @@ fn main() {
     let config: Config = serde_json::from_str(&config_str).unwrap();
     println!("config is {:?}", config);
 
-    let substrate_ws_url = format!("ws://{}:{}", config.substrate_url, config.ws_port);
-    let substrate_rpc_url = format!("http://{}:{}", config.substrate_url, config.rpc_port);
+    let substrate_ws_url = format!("ws://{}:{}", config.substrate_node, config.ws_port);
+    let substrate_rpc_url = format!("http://{}:{}", config.substrate_node, config.rpc_port);
     let addr = ([0, 0, 0, 0], 3000).into();
 
     pretty_env_logger::init();
