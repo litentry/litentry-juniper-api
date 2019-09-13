@@ -18,7 +18,7 @@ use substrate_primitives::{blake2_256, twox_128};
 #[derive(Serialize, Deserialize)]
 struct PostResult {
     jsonrpc: String,
-    result: String,
+    result: Option<String>,
     id: i32,
 }
 
@@ -68,8 +68,11 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_balance result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            let balance = decode_balance(&result.result);
-            Some(balance)
+            if result.result.is_some() {
+                Some(decode_balance(&result.result.unwrap()))
+            } else {
+                Some(0)
+            }
         } else {
             None
         }
@@ -93,8 +96,11 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_identity_count result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            let count = decode_hex_to_u64(&result.result);
-            Some(count)
+            if result.result.is_some() {
+                Some(decode_hex_to_u64(&result.result.unwrap()))
+            } else {
+                Some(0)
+            }
         } else {
             None
         }
@@ -118,8 +124,11 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_token_count result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            let count = decode_hex_to_u64(&result.result);
-            Some(count)
+            if result.result.is_some() {
+                Some(decode_hex_to_u64(&result.result.unwrap()))
+            } else {
+                Some(0)
+            }
         } else {
             None
         }
@@ -149,7 +158,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_identity_via_index result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            Some(result.result)
+            result.result
         } else {
             println!("get_identity_via_index failed.");
             None
@@ -179,7 +188,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_identity_owner_via_hash result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            Some(result.result)
+            result.result
         } else {
             println!("get_identity_owner_via_hash failed.");
             None
@@ -209,7 +218,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_token_hash_via_index result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            Some(result.result)
+            result.result
         } else {
             println!("get_token_hash_via_index failed.");
             None
@@ -240,7 +249,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_token_via_hash result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            decode_token(&result.result)
+            decode_token(&result.result.unwrap())
         } else {
             println!("get_token_via_hash failed.");
             None
@@ -269,7 +278,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_token_owner_via_hash result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            Some(result.result)
+            result.result
         } else {
             None
         }
@@ -297,7 +306,7 @@ impl Rpc {
             let result_string = &resp.into_string().unwrap();
             println!("get_token_identity_via_hash result is {}", result_string.to_owned());
             let result: PostResult = serde_json::from_str(&result_string).unwrap();
-            Some(result.result)
+            result.result
         } else {
             None
         }
