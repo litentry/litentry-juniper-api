@@ -2,9 +2,9 @@ use crate::db::Database;
 use std::thread;
 use std::sync::mpsc::channel;
 use std::sync::Arc;
-use serde_json::{json, Value};
+use serde_json::{json};
 use std::sync::mpsc::Sender as ThreadOut;
-use ws::{connect, CloseCode, Handler, Handshake, Message, Result, Sender};
+use ws::{connect, Handler, Handshake, Message, Result, Sender};
 use litentry_runtime::LitentryEvents;
 
 pub type OnMessageFn = fn(msg: Message, out: Sender, result: ThreadOut<String>) -> Result<()>;
@@ -61,7 +61,7 @@ pub fn subscribe_sync(db: Arc<Database>, url: &str) {
     println!("start rpc thread.");
     start_rpc_client_thread(url.to_owned(), jsonreq, events_in, on_subscription_msg);
 
-    thread::Builder::new().spawn(move || {
+    let _ = thread::Builder::new().spawn(move || {
         loop {
             println!("start to try get events");
             let event_str = events_out.recv().unwrap();
@@ -97,7 +97,7 @@ fn start_rpc_client_thread(url: String,
                            jsonreq: String,
                            result_in: ThreadOut<String>,
                            on_message_fn: OnMessageFn) {
-    let _client = thread::Builder::new()
+    let _ = thread::Builder::new()
         .name("client".to_owned())
         .spawn(move || {
             connect(url, |out| {

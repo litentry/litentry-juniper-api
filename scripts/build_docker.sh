@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-docker build -name litentry-api .
+docker build -t litentry-api .
 

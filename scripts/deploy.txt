@@ -6,7 +6,7 @@ sudo docker pull mysql
 sudo docker run --name first-mysql -p 3306:3306 -e MYSQL\_ROOT\_PASSWORD=12345678 -d mysql
 
 # run api docker.
-sudo docker run --name litentry-juniper-api -p 3000:3000 -v /root/config.json:/root/data/config.json -d litentry-api
+sudo docker run --name litentry-juniper-api --network="host" -p 3000:3000 -v /root/config.json:/root/data/config.json -d litentry-api
 
 # downgrade openssl to 1.0.2 since tokio-tls not support latest 1.1.1
 sudo apt-get install make
