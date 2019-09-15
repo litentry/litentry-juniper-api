@@ -16,6 +16,10 @@ impl Database {
         identities.filter(owner_id.eq(query_id)).load::<models::Identities>(&self.establish_connection()).expect("Error load Users.")
     }
 
+    pub fn get_latest_identities_via_owner_id(&self, query_id: i32) -> std::vec::Vec<models::Identities> {
+        identities.filter(owner_id.eq(query_id)).order(id.desc()).limit(1).load::<models::Identities>(&self.establish_connection()).expect("Error load Users.")
+    }
+
     pub fn insert_identities(&self, new_id: i32, new_owner_id: i32, new_hash: &str) -> QueryResult<usize> {
         diesel::insert_into(identities).values(
             (id.eq(new_id), owner_id.eq(new_owner_id), identity_hash.eq(new_hash)))

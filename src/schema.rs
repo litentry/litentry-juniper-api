@@ -48,6 +48,17 @@ graphql_object!(TokenOwnerIdentity: Context |&self| {
 });
 
 graphql_object!(Query: Context |&self| {
+  field create_identity(&executor) -> Option<String> {
+    let context = executor.context();
+    context.create_identity()
+  }
+
+  field create_token(&executor, to: String, identity_hash: String, cost: String,
+    data: String, data_type: String, expired: String) -> Option<String> {
+    let context = executor.context();
+    context.create_token(to, identity_hash, cost, data, data_type, expired)
+  }
+
   field user(&executor, id: i32) -> Option<UsersData> {
     let context = executor.context();
     context.user(id)

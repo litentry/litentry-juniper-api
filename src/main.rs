@@ -49,7 +49,7 @@ fn main() {
     let addr = ([0, 0, 0, 0], 3000).into();
 
     pretty_env_logger::init();
-    let db = Arc::new(Database::new(&config.mysql_url, &substrate_rpc_url));
+    let db = Arc::new(Database::new(&config.mysql_url, &substrate_rpc_url, &substrate_ws_url));
     subscribe::subscribe_sync(db.clone(), &substrate_ws_url);
     let root_node = Arc::new(RootNode::new(schema::Query, EmptyMutation::<Database>::new()));
 

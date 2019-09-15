@@ -36,4 +36,8 @@ impl Database {
             .inner_join(schema::users::dsl::users.on(owner_id.eq(schema::users::dsl::id)))
             .load::<(models::Tokens, models::Identities, models::Users)>(&self.establish_connection()).expect("Error load Users.")
     }
+
+    pub fn get_last_token(&self) -> std::vec::Vec<models::Tokens> {
+        tokens.order(id.desc()).limit(1).load::<models::Tokens>(&self.establish_connection()).expect("Error load Users.")
+    }
 }

@@ -2,6 +2,7 @@
 extern crate juniper;
 
 use litentry_substrate_rpc as rpc;
+use litentry_substrate_client::LitentryClient;
 use litentry_juniper_database::Database as MysqlDatabase;
 use crate::model::{UsersData, Identities, Tokens, VerifyResult, TokenOwnerIdentity};
 use std::collections::HashMap;
@@ -15,10 +16,11 @@ pub struct Database {
     //TODO now diesel not support u64, should upgrade to u64 after diesel can.
     index_map: Arc<Mutex<RefCell<HashMap<String, i32>>>>,
     pub substrate_rpc: rpc::Rpc,
+    pub substrate_client: LitentryClient,
 }
 
 impl Database {
-    pub fn new(uri: &str, rpc_str: &str) -> Database {
+    pub fn new(uri: &str, rpc_str: &str, ws_str: &str) -> Database {
         // let uri = "mysql://root:12345678@192.168.2.158:3306/litentry";
         let mysql = MysqlDatabase::new(&uri);
         let index = mysql.get_litentry_index();
@@ -36,6 +38,33 @@ impl Database {
             mysql,
             index_map,
             substrate_rpc: rpc::Rpc::new(rpc_str),
+            substrate_client: LitentryClient::new(ws_str),
+        }
+    }
+
+    pub fn create_identity(&self) -> Option<String> {
+        &self.substrate_client.create_identity();
+        // hard coded alice user id as 1 here since we always use alice to create identity now.
+        let alice_address = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
+        &self.sync_identities();
+        let data = &self.mysql.get_latest_identities_via_owner_id(1);
+
+        if data.len() > 0 {
+            Some(data[0].identity_hash.to_owned())
+        } else {
+            None
+        }
+    }
+
+    pub fn create_token(&self, to: String, identity_hash: String, cost: String,
+        data: String, data_type: String, expired: String) -> Option<String> {
+        &self.substrate_client.create_token(to, identity_hash, cost, data, data_type, expired);
+        &self.sync_tokens();
+        let data = &self.mysql.get_last_token();
+        if data.len() > 0 {
+            Some(data[0].token_hash.to_owned())
+        } else {
+            None
         }
     }
 
