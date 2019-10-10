@@ -5,3 +5,4 @@ select * from litentry_index;
 select * from new_identity_event;
 select * from new_token_event;
 
+CREATE DATABASE litentry;
