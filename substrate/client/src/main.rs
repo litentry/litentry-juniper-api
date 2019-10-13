@@ -1,6 +1,6 @@
 extern crate substrate_api_client;
 extern crate codec;
-extern crate primitives;
+//extern crate primitives;
 extern crate log;
 extern crate node_runtime;
 extern crate node_primitives;

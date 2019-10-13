@@ -22,27 +22,22 @@ package = "parity-scale-codec"
 features = ["derive"]
 version = "1.0.0"
 
-[dependencies.primitives]
-git = 'https://github.com/paritytech/substrate'
-rev = '6d47fd919b4d86e4348c6c19d99c80372587d215'
-package = "substrate-primitives"
+#[dependencies.primitives]
+#git = 'https://github.com/paritytech/substrate'
+#package = "substrate-primitives"
 
-[dependencies.node-primitives]
-git = 'https://github.com/paritytech/substrate'
-rev = '6d47fd919b4d86e4348c6c19d99c80372587d215'
-package = "node-primitives"
-
-[dependencies.node-runtime]
-git = 'https://github.com/paritytech/substrate'
-package = "node-runtime"
-rev = '6d47fd919b4d86e4348c6c19d99c80372587d215'
-
-[dependencies.system]
-git = 'https://github.com/paritytech/substrate'
-rev = '6d47fd919b4d86e4348c6c19d99c80372587d215'
-package = "srml-system"
-
-[dependencies.srml-balances]
-git = 'https://github.com/paritytech/substrate'
-rev = '6d47fd919b4d86e4348c6c19d99c80372587d215'
-package = "srml-balances"
+#[dependencies.node-primitives]
+#git = 'https://github.com/paritytech/substrate'
+#package = "node-primitives"
+#
+#[dependencies.node-runtime]
+#git = 'https://github.com/paritytech/substrate'
+#package = "node-runtime"
+#
+#[dependencies.system]
+#git = 'https://github.com/paritytech/substrate'
+#package = "srml-system"
+#
+#[dependencies.srml-balances]
+#git = 'https://github.com/paritytech/substrate'
+#package = "srml-balances"

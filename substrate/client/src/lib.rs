@@ -1,11 +1,11 @@
 extern crate substrate_api_client;
 extern crate codec;
-extern crate primitives;
+//extern crate primitives;
 extern crate log;
-extern crate node_runtime;
-extern crate node_primitives;
-extern crate system;
-extern crate srml_balances;
+// extern crate node_runtime;
+//extern crate node_primitives;
+// extern crate system;
+// extern crate srml_balances;
 
 use substrate_api_client::{
     Api,
@@ -13,7 +13,7 @@ use substrate_api_client::{
     extrinsic, extrinsic::xt_primitives::GenericAddress,
     utils::hexstr_to_hash
 };
-use node_primitives::Hash;
+// use node_primitives::Hash;
 pub struct LitentryClient {
     pub url: String,
 }
@@ -51,7 +51,7 @@ impl LitentryClient {
         let xt = extrinsic::litentry::create_authorized_token(
             api.clone(),
             GenericAddress::from(to),
-            hexstr_to_hash(identity_hash),
+            hexstr_to_hash(identity_hash).unwrap(),
             cost.parse::<u128>().unwrap(),
             data.parse::<u64>().unwrap(),
             data_type.parse::<u64>().unwrap(),
