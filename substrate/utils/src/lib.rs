@@ -151,7 +151,7 @@ pub fn decode_token_no_0x(data: &str) -> Option<(String, String, String, String,
             println!("Error data length is wrong for data field in token ");
         }
         // let data = Cursor::new(&token_vec[48..56]).read_u64::<LittleEndian>().unwrap();
-        let mut data: String = String::from(&token_vec[49..95]);
+        let mut data: String = String::from_utf8(token_vec[49..95].to_owned()).unwrap();
         let data_type = Cursor::new(&token_vec[95..103]).read_u64::<LittleEndian>().unwrap();
         let expired = Cursor::new(&token_vec[103..111]).read_u64::<LittleEndian>().unwrap();
         Some((token_hash, balance.to_string(), data.to_string(), data_type.to_string(), expired.to_string()),)
