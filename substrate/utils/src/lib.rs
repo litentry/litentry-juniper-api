@@ -140,14 +140,20 @@ pub fn decode_token(data: &str) -> Option<(String, String, String, String, Strin
 // hex string to bytes
 pub fn decode_token_no_0x(data: &str) -> Option<(String, String, String, String, String)> {
     let token_vec = hex::decode(data).unwrap();
-    // (4 + 16 + 8 + 8 + 8)
-    if token_vec.len() == 72 {
+    // (32 + 16 + 1 + 46 + 8 + 8)
+    if token_vec.len() == 111 {
         let token_hash = hex::encode(&token_vec[0..32]);
         let balance = Cursor::new(&token_vec[32..48]).read_i128::<LittleEndian>().unwrap();
         // let balance = decode_bytes_to_i128(&token_vec[32..48]);
-        let data = Cursor::new(&token_vec[48..56]).read_u64::<LittleEndian>().unwrap();
-        let data_type = Cursor::new(&token_vec[56..64]).read_u64::<LittleEndian>().unwrap();
-        let expired = Cursor::new(&token_vec[64..72]).read_u64::<LittleEndian>().unwrap();
+        // QmSsw6EcnwEiTT9c4rnAGeSENvsJMepNHmbrgi2S9bXNJr ipfs data example. 46 chars.
+        let data_length = Cursor::new(&token_vec[48..49]).read_u8().unwrap();
+        if data_length != 46 * 4 {
+            println!("Error data length is wrong for data field in token ");
+        }
+        // let data = Cursor::new(&token_vec[48..56]).read_u64::<LittleEndian>().unwrap();
+        let mut data: String = String::from(&token_vec[49..95]);
+        let data_type = Cursor::new(&token_vec[95..103]).read_u64::<LittleEndian>().unwrap();
+        let expired = Cursor::new(&token_vec[103..111]).read_u64::<LittleEndian>().unwrap();
         Some((token_hash, balance.to_string(), data.to_string(), data_type.to_string(), expired.to_string()),)
     } else {
         println!("decode_token_no_0x failed.");
