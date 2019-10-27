@@ -82,6 +82,6 @@ Secret phrase `favorite liar zebra assume hurt cage any damp inherit rescue dela
 }
 
 {
-    createToken (to: "", identityHash: "0x47a2201c20e464c95b76df036a4c0d71fec9c90b0268561d7aa17eab3861a65d", cost: "1", data: "2", dataType: "3", expired: "4")
+    createToken (to: "", identityHash: "0x125770d77accc3f799a58e20bb4e29c090fd7453696b21e177589fe02cc6240c", cost: "1", data: "QmSsw6EcnwEiTT9c4rnAGeSENvsJMepNHmbrgi2S9bXNJr", dataType: "3", expired: "4")
 }
 
