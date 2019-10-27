@@ -53,7 +53,8 @@ impl LitentryClient {
             GenericAddress::from(to),
             hexstr_to_hash(identity_hash).unwrap(),
             cost.parse::<u128>().unwrap(),
-            data.parse::<u64>().unwrap(),
+            // data.parse::<u64>().unwrap(),
+            data.as_bytes().to_vec(),
             data_type.parse::<u64>().unwrap(),
             expired.parse::<u64>().unwrap(),
         );
