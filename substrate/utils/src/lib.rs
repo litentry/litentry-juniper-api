@@ -142,7 +142,7 @@ pub fn decode_token_no_0x(data: &str) -> Option<(String, String, String, String,
     let token_vec = hex::decode(data).unwrap();
     // (32 + 16 + 1 + 46 + 8 + 8)
     if token_vec.len() == 111 {
-        let token_hash = hex::encode(&token_vec[0..32]);
+        let token_hash = format!("{}{}", "0x", hex::encode(&token_vec[0..32]));
         let balance = Cursor::new(&token_vec[32..48]).read_i128::<LittleEndian>().unwrap();
         // let balance = decode_bytes_to_i128(&token_vec[32..48]);
         // QmSsw6EcnwEiTT9c4rnAGeSENvsJMepNHmbrgi2S9bXNJr ipfs data example. 46 chars.

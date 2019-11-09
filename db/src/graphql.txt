@@ -50,7 +50,7 @@
 }
 
 {
-  getTokenInfo(tokenHash: "e9af6bc9c7584ebc90a637f139c1dc5016ce91c9699ff3a6b652686f72a0278c") {
+  getTokenInfo(tokenHash: "0xe9af6bc9c7584ebc90a637f139c1dc5016ce91c9699ff3a6b652686f72a0278c") {
 	tokenHash
     identityHash
     ownerAddress
@@ -63,7 +63,7 @@ Secret phrase `favorite liar zebra assume hurt cage any damp inherit rescue dela
   Address (SS58): 5EXWNJuoProc7apm1JS8m9RTqV3vVwR9dCg6sQVpKnoHtJ68
  message is "message"
 {
-  verifyToken(tokenHash: "ea03bc0b1b1fa88e1168106dca99ccd654ede7a9921b79fd75d167196cbe9f7b",
+  verifyToken(tokenHash: "0xea03bc0b1b1fa88e1168106dca99ccd654ede7a9921b79fd75d167196cbe9f7b",
     signature: "0x54780cfcfacda8afc1702ec040b919ef2114ccb81a8101388cd967ad609cdd762516b956d2f57e731ac7a14b731abf5df33692ff8c2da90dac5e821d99b47682",
     rawData: "0x6d657373616765") {
     verifyResult
