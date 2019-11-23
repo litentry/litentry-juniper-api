@@ -79,7 +79,7 @@ graphql_object!(Query: Context |&self| {
     let context = executor.context();
     context.owned_identities(&address)
   }
-  field get_token_info(&executor, token_hash: String) -> Option<(TokenOwnerIdentity)> {
+  field get_token_info(&executor, token_hash: String) -> Option<TokenOwnerIdentity> {
     let context = executor.context();
     context.get_token_info(&token_hash)
   }
